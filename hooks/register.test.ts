@@ -23,24 +23,24 @@ const WEEKLY = (percentUsed: number) => [
   { kind: 'seven_day', percentUsed, resetsAt: RESETS_AT },
 ]
 
-test('the status maps today\'s slice of the week onto 0 to 100', async ($, on) => {
-  expect(await statusAfter($, on, WEEKLY(31))).toEqual(['17%'])
+test('the status shows what is left of the budget so far', async ($, on) => {
+  expect(await statusAfter($, on, WEEKLY(34))).toEqual(['8.9% left'])
 })
 
-test('overspending carries over past 100', async ($, on) => {
-  expect(await statusAfter($, on, WEEKLY(45))).toEqual(['115%'])
+test('past the budget it says how far over', async ($, on) => {
+  expect(await statusAfter($, on, WEEKLY(45))).toEqual(['2.1% over'])
 })
 
-test('leftovers from earlier days hold it at 0', async ($, on) => {
-  expect(await statusAfter($, on, WEEKLY(25))).toEqual(['0%'])
+test('leftovers stay in the amount left', async ($, on) => {
+  expect(await statusAfter($, on, WEEKLY(10))).toEqual(['32.9% left'])
 })
 
-test('the last day runs up to the whole limit', async ($, on) => {
+test('the next day adds its share', async ($, on) => {
   expect(
     await statusAfter($, on, [
-      { kind: 'seven_day', percentUsed: 100, resetsAt: '2026-11-05T00:00:00Z' },
+      { kind: 'seven_day', percentUsed: 34, resetsAt: '2026-11-08T00:00:00Z' },
     ]),
-  ).toEqual(['100%'])
+  ).toEqual(['23.1% left'])
 })
 
 test('no weekly reading leaves the status alone', async ($, on) => {
