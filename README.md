@@ -6,7 +6,7 @@ A Claude Code mod that shows how much of your weekly limit you can still use tod
 today  8.9% left
 ```
 
-A week's limit gives each day 100/7 percent, about 14.3%. The number is what those days have added up to so far, counted from the week's reset, minus what you've used. Leftovers stay in it, and each midnight adds another 14.3. Past the budget it reads `2.1% over`. It fills in after Claude's first reply in a session.
+A week's limit gives each day 100/7 percent, about 14.3%. The number is what those days have added up to so far, counted from the week's reset, minus what you've used. Leftovers stay in it, and each midnight adds another 14.3. Past the budget it reads `2.1% over`. A new session shows the last saved reading marked with `~`, such as `~8.9% left`, until Claude's first reply brings a fresh one. The saved reading is kept per computer, so it can come from another account signed in there.
 
 ## Install
 
