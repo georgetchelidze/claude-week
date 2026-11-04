@@ -12,9 +12,10 @@ const showPace = async ($: EngineInterface, limits: SessionRateLimit[]) => {
 
   const daysLeft = (Date.parse(limit.resetsAt) - (await $.clock.now())) / DAY_MS
   const day = Math.min(7, Math.max(1, Math.ceil(7 - daysLeft)))
-  const budget = day * DAILY_PERCENT
+  const usedToday = limit.percentUsed - (day - 1) * DAILY_PERCENT
+  const percent = Math.max(0, Math.round((usedToday / DAILY_PERCENT) * 100))
 
-  $.ui.status(`${limit.percentUsed}% / ${budget.toFixed(1)}% today`)
+  $.ui.status(`${percent}%`)
 }
 
 export const register: Register = on => {

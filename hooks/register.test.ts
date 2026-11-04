@@ -18,21 +18,29 @@ const statusAfter = async ($: any, on: any, rateLimits: object[]) => {
   return shown
 }
 
-test('the status shows used against today\'s budget', async ($, on) => {
-  expect(
-    await statusAfter($, on, [
-      { kind: 'five_hour', percentUsed: 1, resetsAt: RESETS_AT },
-      { kind: 'seven_day', percentUsed: 32, resetsAt: RESETS_AT },
-    ]),
-  ).toEqual(['32% / 42.9% today'])
+const WEEKLY = (percentUsed: number) => [
+  { kind: 'five_hour', percentUsed: 1, resetsAt: RESETS_AT },
+  { kind: 'seven_day', percentUsed, resetsAt: RESETS_AT },
+]
+
+test('the status maps today\'s slice of the week onto 0 to 100', async ($, on) => {
+  expect(await statusAfter($, on, WEEKLY(31))).toEqual(['17%'])
 })
 
-test('the last day allows the whole limit', async ($, on) => {
+test('overspending carries over past 100', async ($, on) => {
+  expect(await statusAfter($, on, WEEKLY(45))).toEqual(['115%'])
+})
+
+test('leftovers from earlier days hold it at 0', async ($, on) => {
+  expect(await statusAfter($, on, WEEKLY(25))).toEqual(['0%'])
+})
+
+test('the last day runs up to the whole limit', async ($, on) => {
   expect(
     await statusAfter($, on, [
-      { kind: 'seven_day', percentUsed: 90, resetsAt: '2026-11-05T00:00:00Z' },
+      { kind: 'seven_day', percentUsed: 100, resetsAt: '2026-11-05T00:00:00Z' },
     ]),
-  ).toEqual(['90% / 100.0% today'])
+  ).toEqual(['100%'])
 })
 
 test('no weekly reading leaves the status alone', async ($, on) => {

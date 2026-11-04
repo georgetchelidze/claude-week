@@ -1,5 +1,5 @@
 {
-  "name": "week",
-  "version": "0.3.0",
-  "description": "Shows the weekly limit against its even daily budget of 100/7 percent a day"
+  "name": "today",
+  "version": "0.4.0",
+  "description": "Shows how much of today's even share of the weekly limit is used, from 0 to 100 percent"
 }

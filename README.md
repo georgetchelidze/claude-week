@@ -1,21 +1,20 @@
-# week
+# today
 
-A Claude Code mod that puts your weekly limit next to an even daily budget of 100/7 percent a day, in the status line beside the prompt:
+A Claude Code mod that shows how much of today's share of your weekly limit you've used, in the status line beside the prompt:
 
 ```
-week  31% / 42.9% today
+today  17%
 ```
 
-The first number is how much of the weekly limit you've used. The second is what an even pace allows by the end of today, counted from the week's reset. It fills in after Claude's first reply in a session.
+A week's limit gives each day 100/7 percent, about 14.3%. The mod maps today's slice of the week onto 0–100%, counted from the week's reset. Leftovers carry over: under-using earlier days keeps it at 0% for longer, and overspending starts the day above 100%. It fills in after Claude's first reply in a session.
 
 ## Install
 
-In a terminal session:
+From a shell:
 
 ```
-/plugin install week --marketplace georgetchelidze/claude-week
+claude plugin marketplace add georgetchelidze/claude-week
+claude plugin install today@claude-week --scope user
 ```
-
-Answer `y` to add the marketplace, then choose the user scope to have it in every session.
 
 In the desktop app: click + next to the prompt box, then Plugins, Add marketplace with `georgetchelidze/claude-week`, then Add plugin.

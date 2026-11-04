@@ -1,5 +1,5 @@
 {
   "name": "claude-week",
   "owner": { "name": "George Tchelidze" },
-  "plugins": [{ "name": "week", "source": "./" }]
+  "plugins": [{ "name": "today", "source": "./" }]
 }
